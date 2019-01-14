@@ -1,6 +1,7 @@
 /*
 
-LOG:
+CHANGELOG:
+==========
 INITIAL: Version 1.0 : *Generates magic square of order 3
 UPDATE: Version 1.1 : *Generates magic square of any odd order as input by the user and displays the magic number as well
 UPDATE: Version 1.2 : *Now generates magic square of any odd order as well as any doubly even order; i.e. n*4,n is an integer
@@ -20,7 +21,7 @@ NOTES:
 *) Takes an integer n as input from the user and generates a magic square of order n
 *) The value n must be an odd number or doubly even(n*4)
 *) Value upto 23 is optimal as after this the full output is not visible on the screen or is distorted (At least on my screen)
-
+*) Sample Outputs at end of file
 
 AUTHOR: KP Singh
 
@@ -180,3 +181,70 @@ public class MagicSquare{
 	}	
 }	
 
+/*
+
+OUTPUTS:
+========
+
+1}	$ java MagicSquare 5
+	
+	9       3       22      16      15
+
+	2       21      20      14      8
+
+	25      19      13      7       1
+
+	18      12      6       5       24
+
+	11      10      4       23      17
+
+
+	The magic number is: 65
+
+	=======================================================================================
+
+
+2}  $ java MagicSquare 6
+
+	29      7       6       20      25      24
+
+	9       32      1       27      23      19
+
+	31      3       8       22      21      26
+
+	2       34      33      11      16      15
+
+	36      5       28      18      14      10
+
+	4       30      35      13      12      17
+
+
+	The magic number is: 111
+
+	=======================================================================================
+
+
+3}  $ java MagicSquare 8
+
+	64      63      3       4       5       6       58      57
+
+	60      59      7       8       9       10      54      53
+
+	9       10      54      53      52      51      15      16
+
+	13      14      50      49      48      47      19      20
+
+	17      18      46      45      44      43      23      24
+
+	21      22      42      41      40      39      27      28
+
+	40      39      27      28      29      30      34      33
+
+	36      35      31      32      33      34      30      29
+
+
+	The magic number is: 260
+
+	=======================================================================================
+
+*/

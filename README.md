@@ -2,7 +2,7 @@
 Magic Square Generator
 
 CHANGELOG:
-==========
+
 INITIAL: Version 1.0 : *Generates magic square of order 3
 UPDATE: Version 1.1 : *Generates magic square of any odd order as input by the user and displays the magic number as well
 UPDATE: Version 1.2 : *Now generates magic square of any odd order as well as any doubly even order; i.e. n*4,n is an integer

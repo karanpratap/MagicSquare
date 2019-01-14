@@ -11,6 +11,11 @@ UPDATE: Version 1.2 : *Now generates magic square of any odd order as well as an
 					  *The methods used to find the magic square returns the magic square as a matrix to the calling method
 					  *The square is displayed using a newly implemented method specifically to display the matrix passed to it
 
+MAJOR UPDATE: Version 2.0 : *Now generates magic square for ANY order(odd,4n,4n+2)
+			  				*The magic square of order 2 does not exist
+							*Implemented divide by constant factor algorithm to cover the 4n+2 order problem
+							*That's pretty much it
+
 NOTES:
 *) Takes an integer n as input from the user and generates a magic square of order n
 *) The value n must be an odd number or doubly even(n*4)
@@ -28,6 +33,7 @@ import java.util.Scanner;
 //=================================
 
 public class MagicSquare{
+
 	static int[][] magicSquareOdd(int n){
 		int num=1,row,col;
 		int[][] square=new int[n][n];
@@ -99,36 +105,75 @@ public class MagicSquare{
 			System.out.println("\n");
 		}
 	}
+	
+	static int[][] magicSquareSinglyEven(int n){
+		if(n==2){
+			System.out.println("No normal magic square of order 2 exists!");
+			System.exit(0);
+		}
+		int[][] square=new int[n][n];
+		int[][] quarter;
+		quarter=magicSquareOdd(n/2);
+		
+		//for top left quarter square
+		for(int i=0;i<n/2;i++)
+			for(int j=0;j<n/2;j++){
+				square[i][j]=quarter[i][j];
+				square[n/2+i][n/2+j]=quarter[i][j]+(n*n)/4;
+				square[i][n/2+j]=quarter[i][j]+(n*n)/2;
+				square[n/2+i][j]=quarter[i][j]+3*(n*n)/4;
+		}
+		int k=(n-1)/4;
+	
+		for(int i=0;i<k;i++){
+			for(int j=0;j<n/2;j++){
+				int temp=square[j][i];
+				square[j][i]=square[j+n/2][i];
+				square[j+n/2][i]=temp;
+				if((i+1)<k){
+					temp=square[j][n-i-1];
+					square[j][n-i-1]=square[j+n/2][n-i-1];
+					square[j+n/2][n-i-1]=temp;
+				}
+			}
+		}
+
+		//undo the unneccessary swap
+		int temp=square[n/4][k-1];
+		square[n/4][k-1]=square[3*n/4][k-1];
+		square[3*n/4][k-1]=temp;
+		
+		//swap the diagonal elements
+		temp=square[n/4][k];
+		square[n/4][k]=square[3*n/4][k];
+		square[3*n/4][k]=temp;
+		
+		return square;
+	}
 
 	public static void main(String args[]){ 
 		int n=0,square[][];
 		if(args.length==0){
-			System.out.print("Enter the value of n (odd or doubly even):");
+			System.out.print("Enter the value of n:");
 			Scanner sc=new Scanner(System.in);
-			while((n=sc.nextInt())%4==2){
-				System.out.println("Entered number must be odd or doubly even!");
-				System.out.print("Enter a valid number:");
-			}
+			n=sc.nextInt();
 			sc.close();
 		}
 		else if(args.length==1){
 			n=Integer.parseInt(args[0]);
-			if(n%4==2){
-				System.out.println("Invalid type of command line arguements given!");
-				System.out.println("The command line arguement must be a single integer(odd or doubly even):");
-				System.exit(0);
-			}
 		}
 		else{
 			System.out.println("Invalid number of command line arguements given!");
-			System.out.println("The command line arguement must be a single integer(odd or doubly even):");
+			System.out.println("The command line arguement must be a single integer");
 			System.exit(0);
 		}
 		System.out.println();
 		if(n%4==0)
 			square=magicSquareDoublyEven(n);
-		else 
+		else if(n%2!=0)
 			square=magicSquareOdd(n);
+		else
+			square=magicSquareSinglyEven(n);
 		displaySquare(square);
 		System.out.println();
 		System.out.println("The magic number is: "+(n*(n*n+1))/2);
